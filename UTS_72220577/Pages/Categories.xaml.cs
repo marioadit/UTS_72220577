@@ -1,26 +1,63 @@
 using UTS_72220577.Data;
+using System;
+using System.Linq;
 
-namespace UTS_72220577.Pages;
-
-public partial class Categories : ContentPage
+namespace UTS_72220577.Pages
 {
-    private readonly ccService _service;
-
-    public Categories()
+    public partial class Categories : ContentPage
     {
-        InitializeComponent();
-        _service = new ccService(new HttpClient());
-        LoadCategories();
-    }
+        private readonly ccService _service;
 
-    private async void LoadCategories()
-    {
-        var categories = await _service.GetCategoriesAsync();
-        CategoriesCollectionView.ItemsSource = categories;
-    }
+        public Categories()
+        {
+            InitializeComponent();
+            _service = new ccService(new HttpClient());
+            LoadCategories();
+        }
 
-    private async void OnRefreshCategoriesClicked(object sender, EventArgs e)
-    {
-        LoadCategories();
+        private async void LoadCategories()
+        {
+            var categories = await _service.GetCategoriesAsync();
+            CategoriesCollectionView.ItemsSource = categories;
+        }
+
+        private async void OnEditCategoryClicked(object sender, EventArgs e)
+        {
+            var selectedCategory = CategoriesCollectionView.SelectedItem as category;
+
+            if (selectedCategory != null)
+            {
+                // Navigate to the EditCategories page with the category ID as a parameter
+                await Navigation.PushAsync(new EditCategories(selectedCategory.categoryId));
+            }
+            else
+            {
+                await DisplayAlert("Warning", "Please select a category to edit.", "OK");
+            }
+        }
+
+
+        private async void OnDeleteCategoryClicked(object sender, EventArgs e)
+        {
+            var selectedCategory = CategoriesCollectionView.SelectedItem as category;
+            if (selectedCategory != null)
+            {
+                bool confirm = await DisplayAlert("Confirm Delete", "Are you sure you want to delete this category?", "Yes", "No");
+                if (confirm)
+                {
+                    await _service.DeleteCategoryAsync(selectedCategory.categoryId);
+                    LoadCategories(); // Refresh the category list
+                }
+            }
+            else
+            {
+                await DisplayAlert("Warning", "Please select a category to delete.", "OK");
+            }
+        }
+
+        private async void OnRefreshCategoriesClicked(object sender, EventArgs e)
+        {
+            LoadCategories(); // Refresh the category list
+        }
     }
 }

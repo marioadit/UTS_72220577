@@ -5,17 +5,10 @@
              Title="Page Categories"
              xmlns:data="clr-namespace:UTS_72220577.Data">
 
-    <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="*">
-        <!-- Header Label in the first row -->
-        <Label Grid.Row="0"
-               Text="Categories" 
-               FontSize="Title" 
-               HorizontalOptions="Center" 
-               VerticalOptions="Center" 
-               Margin="0,10,0,5" />
+    <Grid RowDefinitions="*,Auto,Auto" ColumnDefinitions="*">
 
-        <!-- CollectionView for Categories in the second row, scrollable -->
-        <CollectionView Grid.Row="1"
+        <!-- CollectionView for Categories in the first row, scrollable -->
+        <CollectionView Grid.Row="0"
                         x:Name="CategoriesCollectionView" 
                         Margin="10"
                         SelectionMode="Single">
@@ -31,6 +24,19 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+
+        <!-- Edit and Delete Buttons in the second row -->
+        <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="FillAndExpand" Margin="20, 5" Spacing="10">
+            <!-- Set Spacing -->
+            <Button Text="Edit"
+            Clicked="OnEditCategoryClicked"
+            HorizontalOptions="FillAndExpand" />
+            <Button Text="Delete"
+            Clicked="OnDeleteCategoryClicked"
+            HorizontalOptions="FillAndExpand" />
+        </StackLayout>
+
+
 
         <!-- Refresh Categories Button in the third row -->
         <Button Grid.Row="2"
