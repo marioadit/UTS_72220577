@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UTS_72220577.Pages.Login"
+             Title="Login">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <VerticalStackLayout>
+            <Label Text="Login" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center"/>
+            <Entry Placeholder="Username" Grid.Row="1" x:Name="UsernameEntry"/>
+            <Entry Placeholder="Password" Grid.Row="2" x:Name="PasswordEntry" IsPassword="True"/>
+        </VerticalStackLayout>
+        <Button Text="Login" Grid.Row="3" Clicked="Button_Clicked"/>
+        <Label x:Name="MessageLabel" Grid.Row="4" HorizontalOptions="Center" VerticalOptions="Center"/>
+    </Grid>
+</ContentPage>
