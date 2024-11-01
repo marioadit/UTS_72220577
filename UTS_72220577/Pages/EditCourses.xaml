@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="UTS_72220577.Pages.CreateCourses"
-             Title="Create Course">
+             x:Class="UTS_72220577.Pages.EditCourses"
+             Title="Edit Course">
 
     <VerticalStackLayout Padding="20" Spacing="15">
-        <Label Text="Create New Course" FontSize="Title" HorizontalOptions="Center" />
+        <Label Text="Edit Course" FontSize="Title" HorizontalOptions="Center" />
+
+        <!-- Display course ID as a non-editable field -->
+        <Label Text="Course ID" FontAttributes="Bold" />
+        <Label x:Name="courseIdLabel" Text="{Binding _courseId}" FontSize="Medium" IsEnabled="False" />
 
         <!-- Editable fields for course properties -->
         <Entry x:Name="nameEntry" Placeholder="Course Name" />

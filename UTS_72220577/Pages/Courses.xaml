@@ -2,12 +2,44 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="UTS_72220577.Pages.Courses"
-             xmlns:Data="clr-UTS_72220577.Data"
-             Title="Page Courses">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="Courses"
+             xmlns:data="clr-namespace:UTS_72220577.Data">
+
+    <Grid RowDefinitions="*,Auto,Auto" ColumnDefinitions="*">
+
+        <!-- CollectionView for Courses in the first row, scrollable -->
+        <CollectionView Grid.Row="0"
+                        x:Name="CoursesCollectionView" 
+                        Margin="10"
+                        SelectionMode="Single">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="data:course">
+                    <VerticalStackLayout Padding="10">
+                        <Label Text="{Binding courseId, StringFormat='ID: {0}'}" FontSize="Medium" />
+                        <Label Text="{Binding name, StringFormat='Name: {0}'}" FontSize="Small" />
+                        <Label Text="{Binding category.name, StringFormat='Category: {0}'}" FontSize="Small" />
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Edit and Delete Buttons in the second row -->
+        <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="FillAndExpand" Margin="20, 5" Spacing="10">
+            <Button Text="Edit"
+                    Clicked="OnEditCourseClicked"
+                    HorizontalOptions="FillAndExpand" />
+            <Button Text="Delete"
+                    Clicked="OnDeleteCourseClicked"
+                    HorizontalOptions="FillAndExpand" />
+        </StackLayout>
+
+        <!-- Refresh Courses Button in the third row -->
+        <Button Grid.Row="2"
+                Text="Refresh Courses"
+                Clicked="OnRefreshCoursesClicked"
+                Margin="20,10" />
+    </Grid>
 </ContentPage>

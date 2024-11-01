@@ -2,11 +2,80 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="UTS_72220577.Pages.Home"
-             Title="Home">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="Home"
+             xmlns:data="clr-namespace:UTS_72220577.Data">
+
+    <Grid Padding="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <!-- For the Search Bar -->
+            <RowDefinition Height="*" />
+            <!-- For the CollectionView -->
+            <RowDefinition Height="Auto" />
+            <!-- For the Log Out Button -->
+            <RowDefinition Height="Auto" />
+            <!-- For the Refresh Button -->
+        </Grid.RowDefinitions>
+
+        <!-- Search Bar -->
+        <Entry x:Name="SearchEntry"
+               Placeholder="Search by course or category name"
+               TextChanged="OnSearchTextChanged"
+               Margin="0,0,0,10"
+               Grid.Row="0" />
+
+        <!-- CollectionView for displaying courses -->
+        <CollectionView x:Name="CoursesCollectionView"
+                        SelectionMode="None"
+                        Grid.Row="1">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="20" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="data:course">
+                    <Frame HasShadow="True"
+                           CornerRadius="15"
+                           Padding="20"
+                           BackgroundColor="White"
+                           BorderColor="#D1D1D1">
+                        <VerticalStackLayout Spacing="8">
+
+                            <!-- Course Image -->
+                            <Image Source="{Binding imageName}"
+                                   HeightRequest="150"
+                                   Aspect="AspectFill"
+                                   HorizontalOptions="FillAndExpand" />
+
+                            <!-- Course Name with Bold Font -->
+                            <Label Text="{Binding name}"
+                                   FontSize="Large"
+                                   FontAttributes="Bold"
+                                   TextColor="#333" />
+
+                            <!-- Category Name -->
+                            <Label Text="{Binding category.name}"
+                                   FontSize="Medium"
+                                   TextColor="#666"
+                                   FontAttributes="Italic" />
+
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <!-- Refresh Button -->
+        <Button Text="Refresh"
+                Grid.Row="2"
+                Margin="0,10,0,0"
+                Clicked="OnRefreshButtonClicked" />
+
+        <!-- Log Out Button -->
+        <Button Text="Log Out"
+                Grid.Row="3"
+                Margin="0,10,0,0"
+                BackgroundColor="#D9534F"
+                TextColor="White"
+                FontAttributes="Bold"
+                Clicked="OnLogOutButtonClicked" />
+    </Grid>
 </ContentPage>

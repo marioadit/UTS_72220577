@@ -26,8 +26,11 @@ public partial class Login : ContentPage
         }
         else
         {
-            //await DisplayAlert("Error", "Invalid username or password", "OK");
-            login();
+            await DisplayAlert("Error", "Invalid username or password", "OK");
         }
+    }
+    private async void OnLogOutButtonClicked(object sender, EventArgs e)
+    {
+        await DisplayAlert("Logged Out", "You really want to log out?", "OK");
     }
 }

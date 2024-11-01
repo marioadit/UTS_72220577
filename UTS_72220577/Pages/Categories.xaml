@@ -6,7 +6,6 @@
              xmlns:data="clr-namespace:UTS_72220577.Data">
 
     <Grid RowDefinitions="*,Auto,Auto" ColumnDefinitions="*">
-
         <!-- CollectionView for Categories in the first row, scrollable -->
         <CollectionView Grid.Row="0"
                         x:Name="CategoriesCollectionView" 
@@ -27,16 +26,13 @@
 
         <!-- Edit and Delete Buttons in the second row -->
         <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="FillAndExpand" Margin="20, 5" Spacing="10">
-            <!-- Set Spacing -->
             <Button Text="Edit"
-            Clicked="OnEditCategoryClicked"
-            HorizontalOptions="FillAndExpand" />
+                    Clicked="OnEditCategoryClicked"
+                    HorizontalOptions="FillAndExpand" />
             <Button Text="Delete"
-            Clicked="OnDeleteCategoryClicked"
-            HorizontalOptions="FillAndExpand" />
+                    Clicked="OnDeleteCategoryClicked"
+                    HorizontalOptions="FillAndExpand" />
         </StackLayout>
-
-
 
         <!-- Refresh Categories Button in the third row -->
         <Button Grid.Row="2"
