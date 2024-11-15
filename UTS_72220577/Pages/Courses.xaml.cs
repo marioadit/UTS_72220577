@@ -6,7 +6,6 @@ namespace UTS_72220577.Pages;
 public partial class Courses : ContentPage
 {
     private readonly ccService _service;
-    private List<course> _allCourses;
 
     public Courses()
     {
@@ -17,9 +16,15 @@ public partial class Courses : ContentPage
 
     private async Task LoadCourses()
     {
-        var courses = await _service.GetCoursesAsync();
-        _allCourses = courses.ToList(); // Convert to List<course> if necessary
-        CoursesCollectionView.ItemsSource = _allCourses;
+        try
+        {
+            var courses = await _service.GetCoursesAsync();
+            CoursesCollectionView.ItemsSource = courses.ToList();
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Failed to load courses: {ex.Message}", "OK");
+        }
     }
 
     private async void OnEditCourseClicked(object sender, EventArgs e)
@@ -43,8 +48,15 @@ public partial class Courses : ContentPage
             bool confirmed = await DisplayAlert("Confirm Delete", $"Are you sure you want to delete the course '{selectedCourse.name}'?", "Yes", "No");
             if (confirmed)
             {
-                await _service.DeleteCourseAsync(selectedCourse.courseId);
-                await LoadCourses(); // Refresh the list after deletion
+                try
+                {
+                    await _service.DeleteCourseAsync(selectedCourse.courseId);
+                    await LoadCourses(); // Refresh the list after deletion
+                }
+                catch (Exception ex)
+                {
+                    await DisplayAlert("Error", $"Failed to delete the course: {ex.Message}", "OK");
+                }
             }
         }
         else
@@ -59,15 +71,25 @@ public partial class Courses : ContentPage
         await LoadCourses(); // Refresh the list of courses
     }
 
-    private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
+    private async void OnFindButtonClicked(object sender, EventArgs e)
     {
-        var searchText = e.NewTextValue?.ToLower() ?? string.Empty;
-
-        // Filter courses by name or category name
-        CoursesCollectionView.ItemsSource = _allCourses
-            .Where(c =>
-                (c.name?.ToLower().Contains(searchText) ?? false) ||
-                (c.category?.name?.ToLower().Contains(searchText) ?? false))
-            .ToList();
+        string searchText = SearchEntry.Text?.Trim();
+        if (!string.IsNullOrEmpty(searchText))
+        {
+            try
+            {
+                // Fetch courses by name using the API
+                var filteredCourses = await _service.GetCoursesByNameAsync(searchText);
+                CoursesCollectionView.ItemsSource = filteredCourses;
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $"Failed to find courses: {ex.Message}", "OK");
+            }
+        }
+        else
+        {
+            await DisplayAlert("Warning", "Please enter a search term.", "OK");
+        }
     }
 }

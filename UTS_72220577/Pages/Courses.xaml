@@ -7,12 +7,16 @@
 
     <Grid RowDefinitions="Auto,*,Auto,Auto" ColumnDefinitions="*">
 
-        <!-- Search Bar -->
-        <Entry x:Name="SearchEntry"
-               Placeholder="Search by course or category name"
-               TextChanged="OnSearchTextChanged"
-               Margin="10"
-               Grid.Row="0" />
+        <!-- Search Bar with Find Button -->
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="10">
+            <Entry x:Name="SearchEntry"
+                   Placeholder="Search by course name"
+                   Grid.Column="0" />
+            <Button Text="Find"
+                    Clicked="OnFindButtonClicked"
+                    Grid.Column="1"
+                    Margin="5,0,0,0" />
+        </Grid>
 
         <!-- CollectionView for Courses -->
         <CollectionView Grid.Row="1"

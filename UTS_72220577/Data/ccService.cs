@@ -94,5 +94,16 @@ namespace UTS_72220577.Data
             var response = await _httpClient.DeleteAsync($"{CategoriesEndpoint}/{id}");
             response.EnsureSuccessStatusCode();
         }
+
+        public async Task<List<course>> GetCoursesByNameAsync(string courseName)
+        {
+            var response = await _httpClient.GetAsync($"{CoursesEndpoint}/search/{courseName}");
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<List<course>>() ?? new List<course>();
+            }
+            throw new Exception($"Failed to load courses: {response.ReasonPhrase}");
+        }
+
     }
 }
