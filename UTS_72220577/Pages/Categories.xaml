@@ -1,13 +1,19 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="UTS_72220577.Pages.Categories"
              Title="Page Categories"
              xmlns:data="clr-namespace:UTS_72220577.Data">
 
-    <Grid RowDefinitions="*,Auto,Auto" ColumnDefinitions="*">
-        <!-- CollectionView for Categories in the first row, scrollable -->
-        <CollectionView Grid.Row="0"
+    <Grid RowDefinitions="Auto,*,Auto,Auto" ColumnDefinitions="*">
+        <!-- Search Bar -->
+        <Entry x:Name="SearchEntry"
+               Placeholder="Search by category name"
+               TextChanged="OnSearchTextChanged"
+               Margin="10"
+               Grid.Row="0" />
+
+        <!-- CollectionView for Categories -->
+        <CollectionView Grid.Row="1"
                         x:Name="CategoriesCollectionView" 
                         Margin="10"
                         SelectionMode="Single">
@@ -24,8 +30,8 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <!-- Edit and Delete Buttons in the second row -->
-        <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="FillAndExpand" Margin="20, 5" Spacing="10">
+        <!-- Edit and Delete Buttons -->
+        <StackLayout Grid.Row="2" Orientation="Horizontal" HorizontalOptions="FillAndExpand" Margin="20, 5" Spacing="10">
             <Button Text="Edit"
                     Clicked="OnEditCategoryClicked"
                     HorizontalOptions="FillAndExpand" />
@@ -34,11 +40,10 @@
                     HorizontalOptions="FillAndExpand" />
         </StackLayout>
 
-        <!-- Refresh Categories Button in the third row -->
-        <Button Grid.Row="2"
+        <!-- Refresh Button -->
+        <Button Grid.Row="3"
                 Text="Refresh Categories"
                 Clicked="OnRefreshCategoriesClicked"
                 Margin="20,10" />
     </Grid>
-
 </ContentPage>

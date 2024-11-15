@@ -1,10 +1,12 @@
 using UTS_72220577.Data;
+using System.Linq;
 
 namespace UTS_72220577.Pages;
 
 public partial class Courses : ContentPage
 {
     private readonly ccService _service;
+    private List<course> _allCourses;
 
     public Courses()
     {
@@ -16,7 +18,8 @@ public partial class Courses : ContentPage
     private async Task LoadCourses()
     {
         var courses = await _service.GetCoursesAsync();
-        CoursesCollectionView.ItemsSource = courses;
+        _allCourses = courses.ToList(); // Convert to List<course> if necessary
+        CoursesCollectionView.ItemsSource = _allCourses;
     }
 
     private async void OnEditCourseClicked(object sender, EventArgs e)
@@ -52,6 +55,19 @@ public partial class Courses : ContentPage
 
     private async void OnRefreshCoursesClicked(object sender, EventArgs e)
     {
+        SearchEntry.Text = string.Empty; // Clear the search bar
         await LoadCourses(); // Refresh the list of courses
+    }
+
+    private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
+    {
+        var searchText = e.NewTextValue?.ToLower() ?? string.Empty;
+
+        // Filter courses by name or category name
+        CoursesCollectionView.ItemsSource = _allCourses
+            .Where(c =>
+                (c.name?.ToLower().Contains(searchText) ?? false) ||
+                (c.category?.name?.ToLower().Contains(searchText) ?? false))
+            .ToList();
     }
 }
