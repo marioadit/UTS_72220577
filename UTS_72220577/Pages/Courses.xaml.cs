@@ -13,7 +13,7 @@ public partial class Courses : ContentPage
         LoadCourses();
     }
 
-    private async void LoadCourses()
+    private async Task LoadCourses()
     {
         var courses = await _service.GetCoursesAsync();
         CoursesCollectionView.ItemsSource = courses;
@@ -41,7 +41,7 @@ public partial class Courses : ContentPage
             if (confirmed)
             {
                 await _service.DeleteCourseAsync(selectedCourse.courseId);
-                LoadCourses(); // Refresh the list after deletion
+                await LoadCourses(); // Refresh the list after deletion
             }
         }
         else
@@ -52,6 +52,6 @@ public partial class Courses : ContentPage
 
     private async void OnRefreshCoursesClicked(object sender, EventArgs e)
     {
-        LoadCourses(); // Refresh the list of courses
+        await LoadCourses(); // Refresh the list of courses
     }
 }

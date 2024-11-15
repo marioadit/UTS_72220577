@@ -40,7 +40,7 @@ public partial class EditCategories : ContentPage
 
             // Optionally navigate back to the Categories page or show a success message
             await DisplayAlert("Success", "Category updated successfully!", "OK");
-            await Navigation.PushAsync(new Categories());
+            await Shell.Current.GoToAsync("//categories");
         }
     }
 }

@@ -63,7 +63,7 @@ namespace UTS_72220577.Pages
 
                 await _ccService.UpdateCourseAsync(updatedCourse);
                 await DisplayAlert("Success", "Course updated successfully.", "OK");
-                await Navigation.PushAsync(new Courses());
+                await Shell.Current.GoToAsync("//courses");
             }
             else
             {

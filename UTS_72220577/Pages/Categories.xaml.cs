@@ -15,7 +15,7 @@ namespace UTS_72220577.Pages
             LoadCategories();
         }
 
-        private async void LoadCategories()
+        private async Task LoadCategories()
         {
             var categories = await _service.GetCategoriesAsync();
             CategoriesCollectionView.ItemsSource = categories;
@@ -36,7 +36,6 @@ namespace UTS_72220577.Pages
             }
         }
 
-
         private async void OnDeleteCategoryClicked(object sender, EventArgs e)
         {
             var selectedCategory = CategoriesCollectionView.SelectedItem as category;
@@ -46,7 +45,7 @@ namespace UTS_72220577.Pages
                 if (confirm)
                 {
                     await _service.DeleteCategoryAsync(selectedCategory.categoryId);
-                    LoadCategories(); // Refresh the category list
+                    await LoadCategories(); // Refresh the category list after deletion
                 }
             }
             else
@@ -57,7 +56,7 @@ namespace UTS_72220577.Pages
 
         private async void OnRefreshCategoriesClicked(object sender, EventArgs e)
         {
-            LoadCategories(); // Refresh the category list
+            await LoadCategories(); // Refresh the category list
         }
     }
 }
