@@ -34,7 +34,7 @@ namespace UTS_72220577.Pages
             await _service.AddCategoryAsync(newCategory);
 
             await DisplayAlert("Success", "Category added successfully!", "OK");
-            await Navigation.PushAsync(new Categories());
+            await Shell.Current.GoToAsync("//courses");
         }
     }
 }

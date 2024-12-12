@@ -23,7 +23,9 @@ public partial class Courses : ContentPage
         }
         catch (Exception ex)
         {
+            // Log the error and display it
             await DisplayAlert("Error", $"Failed to load courses: {ex.Message}", "OK");
+            System.Diagnostics.Debug.WriteLine($"Error loading courses: {ex.Message}"); // Debug log for tracking the issue
         }
     }
 
@@ -32,7 +34,15 @@ public partial class Courses : ContentPage
         var selectedCourse = CoursesCollectionView.SelectedItem as course;
         if (selectedCourse != null)
         {
-            await Navigation.PushAsync(new EditCourses(selectedCourse.courseId));
+            try
+            {
+                await Navigation.PushAsync(new EditCourses(selectedCourse.courseId));
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $"Failed to navigate to edit course: {ex.Message}", "OK");
+                System.Diagnostics.Debug.WriteLine($"Error navigating to edit course: {ex.Message}"); // Log
+            }
         }
         else
         {
@@ -56,6 +66,7 @@ public partial class Courses : ContentPage
                 catch (Exception ex)
                 {
                     await DisplayAlert("Error", $"Failed to delete the course: {ex.Message}", "OK");
+                    System.Diagnostics.Debug.WriteLine($"Error deleting course: {ex.Message}"); // Log
                 }
             }
         }
@@ -67,8 +78,16 @@ public partial class Courses : ContentPage
 
     private async void OnRefreshCoursesClicked(object sender, EventArgs e)
     {
-        SearchEntry.Text = string.Empty; // Clear the search bar
-        await LoadCourses(); // Refresh the list of courses
+        try
+        {
+            SearchEntry.Text = string.Empty; // Clear the search bar
+            await LoadCourses(); // Refresh the list of courses
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Failed to refresh courses: {ex.Message}", "OK");
+            System.Diagnostics.Debug.WriteLine($"Error refreshing courses: {ex.Message}"); // Log
+        }
     }
 
     private async void OnFindButtonClicked(object sender, EventArgs e)
@@ -85,6 +104,7 @@ public partial class Courses : ContentPage
             catch (Exception ex)
             {
                 await DisplayAlert("Error", $"Failed to find courses: {ex.Message}", "OK");
+                System.Diagnostics.Debug.WriteLine($"Error searching courses: {ex.Message}"); // Log
             }
         }
         else

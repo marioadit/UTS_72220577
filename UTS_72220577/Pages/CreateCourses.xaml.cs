@@ -41,7 +41,7 @@ namespace UTS_72220577.Pages
 
                 await _ccService.AddCourseAsync(newCourse);
                 await DisplayAlert("Success", "Course created successfully.", "OK");
-                await Navigation.PushAsync(new Categories());
+                await Shell.Current.GoToAsync("//courses");
             }
             else
             {
