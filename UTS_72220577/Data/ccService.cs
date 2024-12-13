@@ -16,6 +16,7 @@ namespace UTS_72220577.Data
         private const string CoursesEndpoint = "api/courses";
         private const string CategoriesEndpoint = "api/categories";
         private const string LoginEndpoint = "api/login"; // Add login endpoint
+        private const string EnrollmentsEndpoint = "api/enrollments"; // Add enrollments endpoint
 
         private string token;
 
@@ -168,6 +169,32 @@ namespace UTS_72220577.Data
                 return await response.Content.ReadFromJsonAsync<List<course>>() ?? new List<course>();
             }
             throw new Exception($"Failed to load courses: {response.ReasonPhrase}");
+        }
+
+        // get instructors
+        public async Task<IEnumerable<instructors>> GetInstructorsAsync()
+        {
+            EnsureBearerToken();
+            var response = await _httpClient.GetAsync("api/instructors");
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadFromJsonAsync<IEnumerable<instructors>>();
+        }
+
+        // enrollments
+        public async Task<IEnumerable<enrollments>> GetEnrollmentsAsync()
+        {
+            EnsureBearerToken();
+            var response = await _httpClient.GetAsync(EnrollmentsEndpoint);
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadFromJsonAsync<IEnumerable<enrollments>>();
+        }
+
+        public async Task AddEnrollmentAsync(enrollments enrollment)
+        {
+            EnsureBearerToken();
+            var content = new StringContent(JsonSerializer.Serialize(enrollment), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync(EnrollmentsEndpoint, content);
+            response.EnsureSuccessStatusCode();
         }
     }
 }

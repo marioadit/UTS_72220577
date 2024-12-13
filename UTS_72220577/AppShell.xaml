@@ -30,7 +30,17 @@
 
         <ShellContent Route="ccategories" Icon="add.png"
         ContentTemplate="{DataTemplate partspages:CreateCategories}"/>
+    </FlyoutItem> 
+    
+    <FlyoutItem Title="Page Enrollments" Icon="categories.png">
+        <ShellContent Route="enrollments" Icon="categories.png"
+        ContentTemplate="{DataTemplate partspages:Enrollments}"/>
+
+        <ShellContent Route="cenrollments" Icon="add.png"
+        ContentTemplate="{DataTemplate partspages:CreateEnrollment}"/>
     </FlyoutItem>
+    
+
     
 
 </Shell>

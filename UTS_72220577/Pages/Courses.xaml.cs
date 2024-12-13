@@ -99,7 +99,12 @@ public partial class Courses : ContentPage
             {
                 // Fetch courses by name using the API
                 var filteredCourses = await _service.GetCoursesByNameAsync(searchText);
-                CoursesCollectionView.ItemsSource = filteredCourses;
+
+                // Use LINQ to filter courses by name or description
+                var query = filteredCourses.Where(c => c.name.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
+                                       c.category.name.Contains(searchText, StringComparison.OrdinalIgnoreCase));
+
+                CoursesCollectionView.ItemsSource = query.ToList();
             }
             catch (Exception ex)
             {

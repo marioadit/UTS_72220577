@@ -14,6 +14,8 @@ namespace UTS_72220577
             Routing.RegisterRoute("ccourse", typeof(CreateCourses));
             Routing.RegisterRoute("categories", typeof(Categories));
             Routing.RegisterRoute("ccategory", typeof(CreateCategories));
+            Routing.RegisterRoute("enrollments", typeof(Enrollments));
+            Routing.RegisterRoute("cenrollments", typeof(CreateEnrollment));
         }
     }
 }

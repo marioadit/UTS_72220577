@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UTS_72220577.Pages.CreateEnrollment"
+             Title="Create Enrollment"
+             xmlns:data="clr-namespace:UTS_72220577.Data">
+
+    <VerticalStackLayout Padding="20" Spacing="10">
+        <!-- Instructor ID -->
+        <Entry x:Name="InstructorEntry"
+               Placeholder="Enter Instructor ID" />
+
+        <!-- Course ID -->
+        <Entry x:Name="CourseEntry"
+               Placeholder="Enter Course ID" />
+
+        <!-- Enrolled At -->
+        <Entry x:Name="EnrolledAtEntry"
+               Placeholder="Enter Enrollment Date (yyyy-MM-dd)" />
+
+        <!-- Save Button -->
+        <Button Text="Save Enrollment"
+                Clicked="OnSaveEnrollmentClicked" />
+    </VerticalStackLayout>
+</ContentPage>
